@@ -1,0 +1,48 @@
+#!/bin/bash
+
+if [[ -z "$1" ]]; then
+    echo usage: $0 \<backup_name\>
+    exit 1
+fi
+
+save_path="$(pwd)/$1"
+echo saving to path $save_path, are you sure?
+
+read i
+
+if [[ ! "$i" == "y" ]]; then
+    echo aborted.
+    exit 1
+fi
+
+if [[ -d "$save_path" ]]; then
+    echo file path already exists, are you sure to overwrite it?
+    
+    read i
+    if [[ ! "$i" == "y" ]]; then
+        echo aborted.
+        exit 1
+    fi
+    # else
+
+    trash "$save_path"
+fi
+
+# else
+
+# clean the original one and re-copy
+
+# copy all of these
+# /14/ /world
+# /15/󰗀 /mod_config.xml
+# /16/ /mod_settings.bin
+# /17/󰗀 /player.xml
+# /18/ /session_numbers.salakieli
+# /20/󰗀 /world_state.xml
+
+echo proceeding to copy, ./save00/{mod_config.xml,world,mod_settings.bin,player.xml,session_numbers.salakieli,world_state.xml}
+
+mkdir -p "$save_path"
+cp -rv ./save00/{mod_config.xml,world,mod_settings.bin,player.xml,session_numbers.salakieli,world_state.xml} "$save_path"
+
+echo done
